@@ -1,0 +1,37 @@
+pipeline{
+    tools {
+        jdk 'myJava'
+        maven 'myMaven'
+    }
+    // Agent session is required
+    agent any
+    stages{
+        stage('Clone the repo')
+        {
+            steps{
+                git 'https://github.com/Sonal0409/DevOpsCodeDemo.git/'
+            }
+        }
+        stage('Compile the code'){
+            steps{
+                sh 'mvn compile'
+            }
+        }
+        stage('Code Review'){
+            steps{
+                sh 'mvn pmd:pmd'
+            }
+        }
+        
+          stage('Unit test'){
+            steps{
+                sh 'mvn test'
+            }
+            //  post{
+                         //     success{
+                         //         junit 'target/sunfire-reports/*.xml'
+                         //     }
+            }           //   }
+            
+        }
+    }
